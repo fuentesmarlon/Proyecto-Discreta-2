@@ -6,7 +6,8 @@ Created on Mon Jun  5 09:39:07 2017
 """
 
 from csv import *
-import numpy as np
+import networkx as nx
+g = nx.DiGraph()
 
 a = []
 with open('vuelos.csv') as csvfile:
@@ -25,7 +26,16 @@ a = a[1:]
 for i in range(len(a)):
     a[i][7] = int(a[i][7])
 
-np_vuelos = np.array(a)
+def get_duration(cod_vuelo):
+    for i in range(len(a)):
+        if a[i][3] == cod_vuelo:
+            time = a[i][5]
+            mins = int(time[0:time.index(":")])*60 + int(time[time.index(":")+1:])
+            return mins
+
+for i in range(len(a)):
+    g.add_edge(a[i][1],a[i][2],weight=get_duration(a[i][3]))
+    
 
 
 def hacer_reserva(cod_vuelo):
@@ -49,6 +59,9 @@ def eliminar_reserva(cod_vuelo):
                 seats +=1
                 a[i][7] = seats
                 return True
+            
+#def conexion_ciudades(ciudad1,ciudad2):
+    
     
 def eliminar_vuelo(cod_vuelo):
     for i in range(len(a)):
