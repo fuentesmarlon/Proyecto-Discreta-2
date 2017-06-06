@@ -24,8 +24,8 @@ while k < n:
         n-=1
     k+=1
 a = a[1:]        
-for i in range(len(a)):
-    a[i][7] = int(a[i][7])
+#for i in range(len(a)):
+#    a[i][7] = int(a[i][7])
 
 def get_duration(cod_vuelo):
     for i in range(len(a)):
@@ -65,9 +65,10 @@ def consulta_conexion(ciudad1,ciudad2):
     lista_conexion = []
     for i in range(len(a)):
         if a[i][1] == ciudad1 and a[i][2] == ciudad2:
-            time = get_time(a[i][5])
-            lista_conexion.append(a[i][3])
-            return lista_conexion, convert_time(time)
+            time_comp = get_time(a[i][5])
+            if time_comp < time:
+                lista_conexion= [a[i][3]]
+                time = time_comp
     for i in range(len(a)):
         if a[i][1]==ciudad1:
             for j in range(len(a)):
@@ -76,27 +77,26 @@ def consulta_conexion(ciudad1,ciudad2):
                     if time_comp < time:
                         time = time_comp
                         lista_conexion= [a[i][3]]
-                        lista_conexion.append(a[j][3])
-                    
+                        lista_conexion.append(a[j][3])                    
     return lista_conexion, convert_time(time)
 
 def hacer_reserva(cod_vuelo):
     for i in range(len(a)):
         if a[i][3]== cod_vuelo:
-            seats = a[i][7]
+            seats = int(a[i][7])
             if seats == 0:
                 return False
             else:
                 seats -=1
-                a[i][7] = seats
+                a[i][7] = str(seats)
                 return True
 
 def eliminar_reserva(cod_vuelo):
     for i in range(len(a)):
         if a[i][3]== cod_vuelo:
-            seats = a[i][7]
+            seats = int(a[i][7])
             seats +=1
-            a[i][7] = seats
+            a[i][7] = str(seats)
             return True
     return False
             
@@ -109,7 +109,7 @@ def eliminar_vuelo(cod_vuelo):
         
 
 def agregar_vuelo(aerolinea,origen,destino,cod_vuelo,hora_salida,duracion,hora_llegada,asientos):
-    a.append([aerolinea,origen,destino,cod_vuelo,hora_salida,duracion,hora_llegada,int(asientos)])
+    a.append([aerolinea,origen,destino,cod_vuelo,hora_salida,duracion,hora_llegada,asientos])
     
 def dif_tiempo(time1,time2):
     h1 = int(time1[0:time1.index(":")])
@@ -150,7 +150,9 @@ def mod_num_vuelo(cod_vuelo, new_cod_vuelo):
 def mod_asientos_disp(cod_vuelo, new_asientos):
     for i in range(len(a)):
         if a[i][3] == cod_vuelo:
-            a[i][7] = int(new_asientos)
+            a[i][7] = new_asientos
+            return True
+    return False
             
 def actualizar_csv():
     with open('vuelos.csv','w') as csvfile:
@@ -167,3 +169,7 @@ def actualizar_log():
     file = open("log.txt", "w")
     for i in registro:
         file.write(i)
+        
+def salir():
+    print("Gracias por utilizar este servicio")
+    actualizar_csv()
