@@ -163,13 +163,16 @@ def actualizar_csv():
     csvfile.close()
     
 def log(string):
-    registro.append(string)
+    registro.append(string+"\n")
     
 def actualizar_log():
     file = open("log.txt", "w")
     for i in registro:
         file.write(i)
         
+        
 def salir():
     print("Gracias por utilizar este servicio")
     actualizar_csv()
+    actualizar_log()
+    
