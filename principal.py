@@ -11,14 +11,17 @@ def menu():
                +"4. Eliminar vuelo\n"
                +"5. Modificar hora de vuelo\n"
                +"6. Modificar numero de vuelo\n"
-               +"7. Modificar numero de asientos disponibles\n ")
+               +"7. Modificar numero de asientos disponibles\n "
+               + "8. Disponibilidad de Conexiones\n"
+               +"9. Agregar Conexiones\n"
+               +"10. Eliminar Conexiones\n")
         resp = input("Que desea hacer?")
     if resp ==1:
         cod_vuelo=raw_input("Porfavor ingrese el codigo de vuelo para crear una reserva")
         hacer_reserva(cod_vuelo)
         actualizar_csv()
         print("La reservacion se ha realizado con exito\n")
-        log("nueva reservacion")
+        log("\nnueva reservacion")
         menu()
 
     if resp ==2:
@@ -26,7 +29,7 @@ def menu():
         eliminar_reserva(cod_vuelo)
         actualizar_csv()
         print("La reservacion ha sido eliminada con exito\n")
-        log("Eliminar Reservacion")
+        log("\nEliminar Reservacion")
         menu()
 
     if resp ==3:
@@ -41,14 +44,14 @@ def menu():
         agregar_vuelo(aero,origen,destino,codigo, salida,durar,llegada,asientos)
         actualizar_csv()
         print("Vuelo Guardado exitosamente")
-        log("Nuevo Vuelo")
+        log("\nNuevo Vuelo")
         menu()
     if resp ==4:
         cod = raw_input("Ingrese el codigo del vuelo que desea eliminar:\n")
         eliminar_vuelo(cod)
         actualizar_csv()
         print("Vuelo eliminado :(")
-        log("Eliminar Vuelo")
+        log("\nEliminar Vuelo")
         menu()
     if resp ==5:
         numeroV = raw_input("Ingrese el codigo de vuelo a modificar")
@@ -56,7 +59,7 @@ def menu():
         mod_hora(numeroV,salida)
         actualizar_csv()
         print("Horas cambiadas exitosamente!")
-        log("Cambiar horas")
+        log("\nCambiar horas")
         menu()
 
     if resp ==6:
@@ -65,7 +68,7 @@ def menu():
         mod_num_vuelo(numeroV,numeroN)
         actualizar_csv()
         print("Numero de vuelo cambiado exitosamente")
-        log("Nuevo numero de vuelo")
+        log("\nNuevo numero de vuelo")
         menu()
     if resp ==7:
         numeroV=raw_input("Ingresar el codigo de vuelo:\n")
@@ -73,12 +76,34 @@ def menu():
         mod_asientos_disp(numeroV,numeroA)
         actualizar_csv()
         print("Numero de asientos cambiados exitosamente")
-        log("Modificacion asientos")
+        log("\nModificacion asientos\n")
         menu()
-
+#AQUI COMIENZA LO FALSO
+    #-------------------------------------------------------------------------------------
+    #YOU ARE ABOUT TO WITNESS THE STRENGTH OF STREET KNOWLEDGE
+    if resp ==8:
+        ciudad1 = raw_input("Ingrese la primer ciudad para buscar conexion:\n")
+        ciudad2 = raw_input("Ingrese la segunda ciudad a conectar:\n")
+        conexion = disp_conexiones(ciudad1,ciudad2)
+        log("Descubrir Conexiones")
+        print("Estas son las conexiones disponibles"+conexion)
+        menu()
+    if resp ==9
+        ciudad1=raw_input("Ingrese la primera ciudad para una nueva conexion:\n")
+        ciudad2=raw_input("Ingrese la segunda ciudad para una nueva conexion:\n")
+        conexionN = nueva_conexion(ciudad1, ciudad2)
+        log("\nNueva Conexion")
+        print("Nueva Conexion Guardada con exito")
+        menu()
+    if resp ==10:
+        ciudad1 = raw_input("Ingrese la ciudad1 para eliminar su conexion:\n")
+        ciudad2= raw_input("Ingrese la ciudad2 para eliminar su conexion:\n")
+        eliminar_conexion(ciudad1,ciudad2)
+        log("\nEliminar Conexion")
+        print("La conexion fue eliminada")
     else:
         print("Porfavor Ingrese un numero correcto")
-        log("Te COnFunDIsTe wEEEE xDxDxD")
+        log("\nTe COnFunDIsTe wEEEE xDxDxD")
         menu()
 
 menu()
