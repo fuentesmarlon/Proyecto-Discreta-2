@@ -6,7 +6,9 @@
 
 from csv import *
 
+
 a = []
+registro = []
 
 with open('vuelos.csv') as csvfile:
     vuelos = reader(csvfile, delimiter=',',quotechar= '|')
@@ -93,21 +95,18 @@ def eliminar_reserva(cod_vuelo):
     for i in range(len(a)):
         if a[i][3]== cod_vuelo:
             seats = a[i][7]
-            if seats == 200:
-                return False
-            else:
-                seats +=1
-                a[i][7] = seats
-                return True
+            seats +=1
+            a[i][7] = seats
+            return True
+    return False
             
-#def conexion_ciudades(ciudad1,ciudad2):
-    
-    
 def eliminar_vuelo(cod_vuelo):
     for i in range(len(a)):
         if a[i][3]== cod_vuelo:
-            temp = a[:i]+a[i+1:]
-            return temp
+            del a[i]
+            return True
+    return false
+        
 
 def agregar_vuelo(aerolinea,origen,destino,cod_vuelo,hora_salida,duracion,hora_llegada,asientos):
     a.append([aerolinea,origen,destino,cod_vuelo,hora_salida,duracion,hora_llegada,int(asientos)])
@@ -137,12 +136,16 @@ def mod_hora(cod_vuelo,new_hora):
         if a[i][3]== cod_vuelo:
             a[i][4] = new_hora
             a[i][6] = dif_tiempo(new_hora, a[i][5])
+            return True
+    return False
         
         
 def mod_num_vuelo(cod_vuelo, new_cod_vuelo):
     for i in range(len(a)):
         if a[i][3] == cod_vuelo:
             a[i][3] = new_cod_vuelo
+            return True
+    return False
              
 def mod_asientos_disp(cod_vuelo, new_asientos):
     for i in range(len(a)):
@@ -156,3 +159,11 @@ def actualizar_csv():
         for i in a:
             guardar.writerow(i)
     csvfile.close()
+    
+def log(string):
+    registro.append(string)
+    
+def actualizar_log():
+    file = open("log.txt", "w")
+    for i in registro:
+        file.write(i)
